@@ -17,15 +17,7 @@ def to_regexp(rule_num, rules)
   source = rules[rule_num]
   return source[1] if source.starts_with?('"')
   return "#{to_regexp(42, rules)}+" if rule_num == 8
-  if rule_num == 11
-    r42 = to_regexp(42, rules)
-    r31 = to_regexp(31, rules)
-    # Regexp was a bad choice for part two because you need a push back automata to parse the grammar,
-    # but since this is the only rule that needs it, we can brute force it
-    parts = (1..15).to_a.map { |i| "(?:#{r42 * i})(?:#{r31 * i})" }
-
-    return "(?:#{parts.join('|')})"
-  end
+  return "(?<r11>#{to_regexp(42, rules)}\\g<r11>?#{to_regexp(31, rules)})" if rule_num == 11
 
   tokens = source.split.map { |token| token == '|' ? token : to_regexp(token.to_i, rules) }
   "(?:#{tokens.join('')})"
