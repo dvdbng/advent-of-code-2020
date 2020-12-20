@@ -88,12 +88,6 @@ end
   end
 end
 
-bigimage = (0...W * 10).map do |y|
-  tile = y / 10
-  off = (y % 10) + 0
-  (0...W).map { |x| map[[x, tile]][off] }.join
-end
-
 image = (0...W * 8).map do |y|
   tile = y / 8
   off = (y % 8) + 1
